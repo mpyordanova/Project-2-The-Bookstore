@@ -25,7 +25,7 @@ server.use(express.json());
 server.use(morgan("dev"));
 
 server.use('/products', BookRouter);
-server.use('/routes', UserRouter);
+server.use('/users', UserRouter);
 
 
 // A schema should never be declared in app.js, and you should never 

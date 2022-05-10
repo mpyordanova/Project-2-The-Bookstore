@@ -101,7 +101,17 @@ BookRouter.post("/", (req, res) => {
     })
 })
 
-// get route
+// delete route
+BookRouter.delete('/:id',(req, res) => {
+    Book.deleteOne({_id: req.params.id},(error, deletedBook)=>{
+            if(error){
+                res.status(404).json({error: 'No book found'})
+            }else{
+                res.status(204).json({message: "Successfully deleted!"})
+            }
+        })
+    })
+
 
 
 module.exports = BookRouter;

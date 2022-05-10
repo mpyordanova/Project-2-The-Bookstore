@@ -1,6 +1,8 @@
 const express = require('express');
 const UserRouter = express.Router();
+// model
 const User = require('../models/Users');
+
 
 const user = [
 {
@@ -40,5 +42,28 @@ const user = [
     email:'pearl.whaleee@yahoo.com'
 }
 ]
+// user post
+UserRouter.post("/", (req, res) => {
+    const userData = req.body
+ // model         array[]      array[]
+    User.insertMany(user, (err, user)=>{
+        if(err){
+            res.status(400).json({message: err.message})
+        }else{
+            res.status(201).json({user})
+        }
+    })
+})
+
+// delete user
+UserRouter.delete('/:id',(req, res) => {
+    User.deleteOne({_id: req.params.id},(error, deletedUser) =>{
+            if(error){
+                res.status(404).json({error: "No user found!"})
+            }else{
+                res.status(204).json({message: "Successfully deleted!"})
+            }
+        })
+    })
 
 module.exports = UserRouter;
