@@ -6,7 +6,7 @@ const userSchema = new Schema ({
     age:{type: Number},
     address:{type: String},
     email: {type: String, required: true, unique: true, required: true},
-    // books_in_Library: [{type: typeof Schema.Types.ObjectId, ref: 'Books'}],
+    // favourites: [{type: typeof Schema.Types.ObjectId, ref: 'Books'}],
 })
 
 const User = mongoose.model("User", userSchema);

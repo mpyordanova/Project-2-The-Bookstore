@@ -42,6 +42,12 @@ const user = [
     email:'pearl.whaleee@yahoo.com'
 }
 ]
+
+// Get Index route
+UserRouter.get('/', (req, res)=> {
+    res.status(200).json(user)
+})
+
 // user post
 UserRouter.post("/", (req, res) => {
     const userData = req.body
@@ -66,4 +72,15 @@ UserRouter.delete('/:id',(req, res) => {
         })
     })
 
+    // GET User by ID
+    UserRouter.get("/:_id", (req, res)=>{
+        const _id = req.params._id
+        User.findById(req.params._id, (err, user)=>{
+            if(err){
+                res.status(404).json({message: err. message})
+            }else{
+                res.status(200).json(user)
+            }
+        })
+    })
 module.exports = UserRouter;

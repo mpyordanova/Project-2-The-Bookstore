@@ -86,7 +86,10 @@ stars: 3.70,
     stars: 3.72,
 }
 ]
-
+// Get request Index
+BookRouter.get('/', (req, res)=> {
+    res.status(200).json(book)
+})
 
 // Insert the data into mongoDB. To check localhost:3000/products
 BookRouter.post("/", (req, res) => {
@@ -112,6 +115,32 @@ BookRouter.delete('/:id',(req, res) => {
         })
     })
 
+// PUT route??????????????????????????????????????
+BookRouter.put('/update/:_id', (req, res)=> {
+    const _id = req.params._id;
+    let number_of_copies;
+    let updatedBook = {_id, number_of_copies};
+    
+    Book.updateOne(req.params._id, updatedBook, (err, updatedBook) =>{
+         if (err){
+             res.status(404).json({message: 'Book not found!'})
+         }else {
+             res.status(202).json(updatedBook)
+         }
+    
+    })
+})
 
+// GET product by ID
+BookRouter.get("/:_id", (req, res)=>{
+    const _id = req.params._id
+    Book.findById(req.params._id, (err, book)=>{
+        if(err){
+            res.status(404).json({message: err. message})
+        }else{
+            res.status(200).json(book)
+        }
+    })
+})
 
 module.exports = BookRouter;
