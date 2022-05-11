@@ -7,10 +7,16 @@ const cors = require('cors');
 // import Book model
 const Book = require('./models/Products');
 const User = require('./models/Users');
+const Publisher = require('./models/Publishers');
+
+
 
 const mongoConfig = require('./config');
-const BookRouter = require('./routes/products')
-const UserRouter = require('./routes/users')
+const BookRouter = require('./routes/products');
+const UserRouter = require('./routes/users');
+const PublisherRouter = require('./routes/publishers');
+const clearRouter = require('./routes/clear');
+const seedRouter = require('./routes/seed')
 require('dotenv').config();
 
 
@@ -26,12 +32,10 @@ server.use(morgan("dev"));
 
 server.use('/products', BookRouter);
 server.use('/users', UserRouter);
+server.use('/publishers', PublisherRouter);
+server.use('/clear', clearRouter);
+server.use('/seed', seedRouter)
 
-
-// A schema should never be declared in app.js, and you should never 
-// have multiple schemas in a single file (even if you intend to nest one schema in another).
-// const {Schema} = require('./models/productSchema');
-// const {Schema} = require('./models/userSchema');
 
 server.get('/', (req, res) =>{
 res.status(200).json({message: 'Welcome to the bookstore!'})

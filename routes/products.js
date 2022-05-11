@@ -30,6 +30,7 @@ year_published: 1996,
 in_stock:'yes',
 number_of_copies: 6,
 stars: 4.44,
+
 },
 {
 title:  'The_Hunger_Games',
@@ -38,7 +39,8 @@ author: 'Suzanne_Collins',
 year_published: 2008,
 in_stock:'yes',
 number_of_copies:1, 
-stars: 4.32
+stars: 4.32,
+
 },
 {
 title:  'Going_postal',
@@ -47,7 +49,8 @@ author:  'Terry_Pratchett',
 year_published: 2004,
 in_stock:'no',
 number_of_copies:0, 
-stars: 4.38
+stars: 4.38,
+
 },
 {
 title: 'The_Fault_in_our_Stars',  
@@ -56,7 +59,8 @@ author:  'John_Green',
 year_published: 2012,
 in_stock:'yes',
 number_of_copies: 1,
-stars: 4.17
+stars: 4.17,
+
 },
 {
 title:  'Lolita',
@@ -66,6 +70,7 @@ year_published: 1955,
 in_stock: 'yes',
 number_of_copies: 2,
 stars: 3.88,
+
 },
 {
 title:  'Cleopatra',
@@ -75,6 +80,7 @@ year_published: 2010,
 in_stock:'yes',
 number_of_copies: 4,
 stars: 3.70,
+
 },
 {
     title:  'The_Girl_with_The_lower_Back_Tatoo',
@@ -84,6 +90,7 @@ stars: 3.70,
     in_stock: 'yes',
     number_of_copies: 11,
     stars: 3.72,
+  
 }
 ]
 // Get request Index
@@ -115,13 +122,10 @@ BookRouter.delete('/:id',(req, res) => {
         })
     })
 
-// PUT route??????????????????????????????????????
+// PUT route
 BookRouter.put('/update/:_id', (req, res)=> {
     const _id = req.params._id;
-    let number_of_copies;
-    let updatedBook = {_id, number_of_copies};
-    
-    Book.updateOne(req.params._id, updatedBook, (err, updatedBook) =>{
+    Book.updateOne({_id:req.params._id}, req.body, (err, updatedBook) =>{
          if (err){
              res.status(404).json({message: 'Book not found!'})
          }else {
@@ -130,6 +134,8 @@ BookRouter.put('/update/:_id', (req, res)=> {
     
     })
 })
+
+
 
 // GET product by ID
 BookRouter.get("/:_id", (req, res)=>{

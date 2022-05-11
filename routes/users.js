@@ -9,37 +9,43 @@ const user = [
     name: "Micky Mouse",
     age: 42,
     address:'12 Main ave, MouseDen',
-    email:"agnela@abv.bg"
+    email:"agnela@abv.bg",
+  
 },
 {
     name:'Patric_Star' ,
     age: 20,
     address:'2 Bikini Lane, Bikini Bottom, Ocean',
     email:'patric.star@google.com',
+ 
 },
 {
     name: 'SpongeBob_SquarePants',
     age: 15,
     address:'1 Bikini line, Bikini Bottom, Ocean',
-    email:"sponge.bob@gmail.com"
+    email:"sponge.bob@gmail.com",
+
 },
 {
     name: "Scrooge MsDuck",
     age: 72,
     address:'1000 Tressure Islands, Tresor City',
-    email:'more.money@gmail.com'
+    email:'more.money@gmail.com',
+  
 },
 {
     name: 'Eugene Crabs',
     age: 50,
     address:'Crab Shack st, Bikini Bottom, Ocean',
-    email:'mr.crabs@hotmail.com'
+    email:'mr.crabs@hotmail.com',
+    
 },
 {
     name: 'Pearl',
     age: 17,
     address:'Crab Shack st.,Bikini Bottom, Ocean',
-    email:'pearl.whaleee@yahoo.com'
+    email:'pearl.whaleee@yahoo.com',
+ 
 }
 ]
 
@@ -71,6 +77,31 @@ UserRouter.delete('/:id',(req, res) => {
             }
         })
     })
+
+    // Get User route
+    UserRouter.put('/update/:_id', (req, res)=> {
+        const _id = req.params._id;
+        User.updateOne({_id:req.params._id}, req.body, (err, updatedUser) =>{
+             if (err){
+                 res.status(404).json({message: 'Book not found!'})
+             }else {
+                 res.status(202).json(updatedUser)
+             }
+        
+        })
+    })
+
+// // PUT to update favorites
+// BookRouter.put('/favorite/:userId/:productId', (req, res)=>{
+//    User.updateOne({
+//        _id:req.params.userId}, {$push:{favorites: req.params.productId}},(error,updatedUser)=>{
+//            if(err){
+//                console.log(error);
+//            }
+//        }
+//    })
+// })
+
 
     // GET User by ID
     UserRouter.get("/:_id", (req, res)=>{

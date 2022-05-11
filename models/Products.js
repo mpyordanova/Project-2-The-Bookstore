@@ -10,8 +10,10 @@ const productSchema = new Schema ({
     in_stock: {type: Boolean},
     number_of_copies: {type: Number},
     stars:{type: Number},
-    // in_user_library: [{ type: typeof Schema.Types.ObjectId, ref: 'Users'}],
-})
+    in_user_library: [{ type: Schema.Types.ObjectId, ref: 'Users'}]
+},
+{timestamps: true});
+
 const Book = mongoose.model('Book', productSchema);
 
 module.exports = Book;
