@@ -6,7 +6,9 @@ const publisherSchema = new Schema ({
     location: {type: String, required:true},
     size: {type: String},
     format: {type: String},
-    website: {type: String}
+    website: {type: String},
+    publishedBooks: [{type: Schema.Types.ObjectId, ref: 'Products'}],
+
 });
 
 

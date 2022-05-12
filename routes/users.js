@@ -1,4 +1,5 @@
 const express = require('express');
+const Book = require('../models/Products');
 const UserRouter = express.Router();
 // model
 const User = require('../models/Users');
@@ -92,15 +93,37 @@ UserRouter.delete('/:id',(req, res) => {
     })
 
 // // PUT to update favorites
-// BookRouter.put('/favorite/:userId/:productId', (req, res)=>{
-//    User.updateOne({
-//        _id:req.params.userId}, {$push:{favorites: req.params.productId}},(error,updatedUser)=>{
-//            if(err){
-//                console.log(error);
-//            }
-//        }
-//    })
-// })
+UserRouter.put('/favourite/:userId/:productId', (req, res)=>{
+   User.updateOne({
+       _id:req.params.userId}, {$push:{favourites: req.params.productId}},(error,updatedUser)=>{
+           if(error){
+               console.log(error);
+               res.status(404).json({error: 'User not found!'});
+           }else{
+               Book.updateOne({
+                   _id: req.params.productId},{
+                    //    publisher.:obj 
+                       $push:{
+                           in_user_library: req.params.userId
+                       }
+                       },(error, updatedProduct) =>{
+                           if(error){
+                               console.error(error);
+                               res.status(404).json({
+                                   error:'Book not found'
+                               })
+                           }else{
+                               res.status(202).json({
+                                   message: "Successfully updated user and favorite books"
+                               })
+                           }
+                       })
+                   }
+               })
+        
+       
+   })
+
 
 
     // GET User by ID

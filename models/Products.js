@@ -10,7 +10,8 @@ const productSchema = new Schema ({
     in_stock: {type: Boolean},
     number_of_copies: {type: Number},
     stars:{type: Number},
-    in_user_library: [{ type: Schema.Types.ObjectId, ref: 'Users'}]
+    in_user_library: [{ type: Schema.Types.ObjectId, ref: 'Users'}],
+    publisher: {type: Schema.Types.ObjectId, ref: "Publisher"}
 },
 {timestamps: true});
 

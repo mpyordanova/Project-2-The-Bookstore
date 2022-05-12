@@ -2,8 +2,9 @@ const express = require('express');
 const BookRouter = express.Router()
 // schema model inport
 const Book = require('../models/Products');
+const Publisher = require('../models/Publishers');
 
-const book = [
+const bookData = [
 {
 title: 'The_lost_symbol', 
 genre: 'mystery', 
@@ -12,6 +13,7 @@ year_published: 2009,
 in_stock:'yes',
 number_of_copies: 10,
 stars: 3.5,
+publisher: '627c191328b278cc399f12cd'
 },
 {
 title: 'The_Hunchback_of_Notre-Dam',
@@ -21,6 +23,7 @@ year_published: 1831,
 in_stock:'yes',
 number_of_copies: 3, 
 stars: 4,
+publisher: '627c191328b278cc399f12cd'
 },
 {
 title:  'A_Game_of_Thrones',
@@ -107,6 +110,36 @@ BookRouter.post("/", (req, res) => {
             res.status(400).json({message: err.message})
         }else{
             res.status(201).json({book})
+        }
+    })
+})
+
+
+BookRouter.post("/two", (req, res) => {
+  
+ // model         array[]      array[]
+    Book.insertMany(bookData, (err, book)=>{
+        if(err){
+            res.status(400).json({message: err.message})
+        }else{
+            Publisher.updateMany({
+                $in:{
+                    _id: ['book.publisher']
+                }
+            },{
+                $push:{
+                    publishedBooks: {
+                        _id:'book._id.$[]'
+                    }
+                }
+            },(err,publisher)=>{
+                if(err){
+                    res.status(400).json({message: err.message})
+                }else { 
+                    res.status(201).json({book})
+
+                }
+            })
         }
     })
 })
