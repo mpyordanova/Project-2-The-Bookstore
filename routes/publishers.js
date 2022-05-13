@@ -37,29 +37,41 @@ PublisherRouter.post('/', (req, res)=>{
     })
 })
 
-// Create connection with published books
-PublisherRouter.put('/published/:publisherId/:productId', (req, res)=> {
-    const publishedData= req.body
-    Publisher.updateOne({ _id:req.params.publisherId}, {_id:req.params.productId}, (error, publishedData)=>{
-if(error){
-    console.log(error);
-    res.status(404).json({error:'Product not found'});
-    } else {
-        Book.updateOne({_id: req.params.publisherId},{_id: req.params.productId}
-    ,(error, publishedData)=>{
-        if(error){
-            res.status(404).json({
-                error: 'Book not found'
-            })
-        }else{
-            res.status(202).json({
-                message:'Successfully updated publisher and books'
-            })
-        }
-    })
-}
+// Delete One
+PublisherRouter.delete('/:id',(req, res) => {
+    Publisher.deleteOne({_id: req.params.id},(error, deletedPublisher)=>{
+            if(error){
+                res.status(404).json({error: 'No book found'})
+            }else{
+                res.status(204).json({message: "Successfully deleted!"})
+            }
         })
     })
+
+// Create connection with published books
+// PublisherRouter.put('/published/:publisherId/:productId', (req, res)=> {
+//     const publishedData= req.body
+//     //                   what is being updated          data we r updating with       what does after update
+//     Publisher.updateOne({ _id:req.params.publisherId}, {_id:req.params.productId}, (error, publishedData)=>{
+// if(error){
+//     console.log(error);
+//     res.status(404).json({error:'Product not found'});
+//     } else {
+//         Book.updateOne({_id: req.params.publisherId},{_id: req.params.productId}
+//     ,(error, publishedData)=>{
+//         if(error){
+//             res.status(404).json({
+//                 error: 'Book not found'
+//             })
+//         }else{
+//             res.status(202).json({
+//                 message:'Successfully updated publisher and books'
+//             })
+//         }
+//     })
+// }
+//         })
+//     })
     
         
     

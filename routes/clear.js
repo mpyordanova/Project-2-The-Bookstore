@@ -4,7 +4,7 @@ const Book = require('../models/Products');
 const User = require('../models/Users');
 const Publisher = require('../models/Publishers')
 
-clearRouter.delete("/", (req, res)=>{
+clearRouter.delete("/products", (req, res)=>{
     Book.deleteMany(
           (err)=>{
          if(err){

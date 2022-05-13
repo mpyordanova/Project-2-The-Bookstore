@@ -4,13 +4,17 @@ const Book = require('../models/Products');
 const User = require('../models/Users');
 const Publisher = require('../models/Publishers');
 const PublisherRouter = require('../routes/publishers')
+const bookData = require('./Book')
 
+// 1st create Book.js file with the book array, export it and reference it on line 7.
 seedRouter.post('/', (req, res)=>{
-    Book.insertMany(book, (err, book)=>{
+    Book.insertMany(bookData, (err, BookData)=>{
         if(err){
+            //            err not error because i Have it as err on line 12.
+            console.error(err)
             res.status(400).json({message:err.message})
         }else{
-            res.status(201).json({book})
+            res.status(201).json({bookData})
         }
     })
 })

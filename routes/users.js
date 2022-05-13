@@ -92,7 +92,7 @@ UserRouter.delete('/:id',(req, res) => {
         })
     })
 
-// // PUT to update favorites
+// // PUT to update favorites with U!!!!!!!!!!!!!!
 UserRouter.put('/favourite/:userId/:productId', (req, res)=>{
    User.updateOne({
        _id:req.params.userId}, {$push:{favourites: req.params.productId}},(error,updatedUser)=>{
