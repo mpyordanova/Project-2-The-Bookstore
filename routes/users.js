@@ -55,7 +55,7 @@ UserRouter.get('/', (req, res)=> {
     res.status(200).json(user)
 })
 
-// user post
+// user post. Or use the seed file
 UserRouter.post("/", (req, res) => {
     const userData = req.body
  // model         array[]      array[]
@@ -67,6 +67,24 @@ UserRouter.post("/", (req, res) => {
         }
     })
 })
+
+
+
+// create one
+UserRouter.post("/new", (req, res) => {
+    const userData = req.body
+        //  We dont use 'user' only because it is array and has many objects and we're trying to create 1 only.
+    User.create(userData, (err, user)=>{
+        if(err){
+            console.log(err),
+            res.status(400).json({message: err.message})
+        }else{
+            res.status(201).json({userData})
+        }
+    })
+})
+
+
 
 // delete user
 UserRouter.delete('/:id',(req, res) => {

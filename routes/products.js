@@ -3,7 +3,7 @@ const BookRouter = express.Router()
 // schema model inport
 const Book = require('../models/Products');
 const Publisher = require('../models/Publishers');
-
+const BookData = require('./Book')
 
 // Get request Index
 BookRouter.get('/', (req, res)=> {
@@ -51,6 +51,14 @@ BookRouter.post("/two/", (req, res) => {
     })
 })
 
+BookRouter.put("/two/", (req, res) => {
+let bookData = req.params
+
+    Book.updateMany(bookData, (err, book)=>{
+
+    })
+    })
+
 // delete route/ delete product by ID
 BookRouter.delete('/:id',(req, res) => {
     Book.deleteOne({_id: req.params.id},(error, deletedBook)=>{
@@ -75,7 +83,18 @@ BookRouter.put('/update/:_id', (req, res)=> {
     })
 })
 
+// // update with $inc
+// BookRouter.put('/update/qty/:_id', (req, res)=> {
+//     Book.updateOne({_id}, {$inc:{number_of_copies:(1)}},(err, updatedBook))=>{
+//         if (err){
+//             res.status(404).json({message: 'Book not found!'})
+//         }else {
+//             res.status(202).json(updatedBook)
+//         }
+//     }
+// })
 
+BookRouter
 
 // GET product by ID
 BookRouter.get("/:_id", (req, res)=>{

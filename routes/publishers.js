@@ -37,6 +37,18 @@ PublisherRouter.post('/', (req, res)=>{
     })
 })
 
+// create one
+PublisherRouter.post('/new', (req, res)=>{
+    const publisherData = req.body
+    //            We dont use publisher only because it is array and has many objects and we're trying to create 1 only.
+    Publisher.create(publisherData, (err, publisher)=>{
+        if(err){
+            res.status(400).json({message:err.message})
+        }else{
+            res.status(201).json({publisherData})
+        }
+    })
+})
 // Delete One
 PublisherRouter.delete('/:id',(req, res) => {
     Publisher.deleteOne({_id: req.params.id},(error, deletedPublisher)=>{
@@ -73,8 +85,30 @@ PublisherRouter.delete('/:id',(req, res) => {
 //         })
 //     })
     
-        
+// Update one 
+PublisherRouter.put('/update/:_id', (req, res)=> {
+    const _id = req.params._id;
+    Publisher.updateOne({_id:req.params._id}, req.body, (err, updatedPublisher) =>{
+         if (err){
+             res.status(404).json({message: 'Book not found!'})
+         }else {
+             res.status(202).json(updatedPublisher)
+         }
     
+    })
+})
+   
+   // GET User by ID
+   PublisherRouter.get("/:_id", (req, res)=>{
+    const _id = req.params._id
+    Publisher.findById(req.params._id, (err, Publisher)=>{
+        if(err){
+            res.status(404).json({message: err. message})
+        }else{
+            res.status(200).json(Publisher)
+        }
+    })
+}) 
 
 
 
